@@ -5,7 +5,8 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 	crt.push(std::vector<std::string>());
 	antlrcpp::Any ret = visitChildren(ctx);
 	for (std::string x: crt.top()) name_space().remove(x);
-	return crt.pop() , ret;
+	crt.pop();
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
@@ -17,40 +18,57 @@ antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitParameters(Python3Parser::ParametersContext *ctx)
 {
-	return visitChildren(ctx);
+	return visitTypedargslist(ctx -> typedargslist());
 }
 
 antlrcpp::Any EvalVisitor::visitTypedargslist(Python3Parser::TypedargslistContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitTfpdef(Python3Parser::TfpdefContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitStmt(Python3Parser::StmtContext *ctx)
 {
-	return visitChildren(ctx);
+	antlrcpp::Any ret = ctx -> simple_stmt() == nullptr ? visitCompound_stmt(ctx -> compound_stmt()) : visitSimple_stmt(ctx -> simple_stmt());
+	if (ret.is<RETURN_SIGN>())
+	{
+//		std::cerr << "stmt : Catch and throw RETURN" << std::endl;
+//		assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+	}
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitSimple_stmt(Python3Parser::Simple_stmtContext *ctx)
 {
-	return visitChildren(ctx);
+	antlrcpp::Any ret = visitSmall_stmt(ctx -> small_stmt());
+	if (ret.is<RETURN_SIGN>())
+	{
+//		std::cerr << "simple_stmt : Catch and throw RETURN" << std::endl;
+//		assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+	}
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitSmall_stmt(Python3Parser::Small_stmtContext *ctx)
 {
-	return visitChildren(ctx);
+	antlrcpp::Any ret = ctx -> expr_stmt() == nullptr ? visitFlow_stmt(ctx -> flow_stmt()) : visitExpr_stmt(ctx -> expr_stmt());
+	if (ret.is<RETURN_SIGN>())
+	{
+//		std::cerr << "small_stmt : Catch and throw RETURN" << std::endl;
+//		assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+	}
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx)
 {
 	antlrcpp::Any tmp = visitTestlist(ctx -> testlist().back());
 	std::vector<dtype> ret;
-	if (tmp.is<dtype>()) ret.push_back(tmp.as<dtype>());
-	else if (tmp.is<std::vector<dtype> >()) ret = tmp.as<std::vector<dtype> >();
+	if (tmp.is<std::vector<dtype> >()) ret = tmp.as<std::vector<dtype> >();
 	else return nullptr;
 	name_space &nsp = stack_workspace.top();
 	if (ctx -> augassign() != nullptr)
@@ -81,12 +99,18 @@ antlrcpp::Any EvalVisitor::visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitAugassign(Python3Parser::AugassignContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitFlow_stmt(Python3Parser::Flow_stmtContext *ctx)
 {
-	return visitChildren(ctx);
+	antlrcpp::Any ret = ctx -> break_stmt() == nullptr ? (ctx -> continue_stmt() == nullptr ? visitReturn_stmt(ctx -> return_stmt()) : visitContinue_stmt(ctx -> continue_stmt())) : visitBreak_stmt(ctx -> break_stmt());
+	if (ret.is<RETURN_SIGN>())
+	{
+//		std::cerr << "flow_stmt : Catch and throw RETURN" << std::endl;
+//		assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+	}
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitBreak_stmt(Python3Parser::Break_stmtContext *ctx)
@@ -103,21 +127,39 @@ antlrcpp::Any EvalVisitor::visitContinue_stmt(Python3Parser::Continue_stmtContex
 
 antlrcpp::Any EvalVisitor::visitReturn_stmt(Python3Parser::Return_stmtContext *ctx)
 {
-	std::vector<dtype> ret;
-	if (ctx -> testlist() != nullptr) ret = visitTestlist(ctx -> testlist()).as<std::vector<dtype> >();
-	return RETURN_SIGN(ret);
+	antlrcpp::Any ret;
+	if (ctx -> testlist() != nullptr) ret = visitTestlist(ctx -> testlist());
+//	assert(ret.is<std::vector<dtype> >());
+//	std::cerr << "Throw RETURN" << std::endl;
+	Return_Value = ret;
+	return RETURN_SIGN();
 }
 
 antlrcpp::Any EvalVisitor::visitCompound_stmt(Python3Parser::Compound_stmtContext *ctx)
 {
-	return visitChildren(ctx);
+	antlrcpp::Any ret = ctx -> if_stmt() == nullptr ? (ctx -> while_stmt() == nullptr ? visitFuncdef(ctx -> funcdef()) : visitWhile_stmt(ctx -> while_stmt())) : visitIf_stmt(ctx -> if_stmt());
+	if (ret.is<RETURN_SIGN>())
+	{
+//		std::cerr << "compound_stmt : Catch and throw RETURN" << std::endl;
+//		assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+	}
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 {
 	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i)
 		if ((bool)visitTest(ctx -> test()[i]).as<dtype>())
-			return visitSuite(ctx -> suite()[i]);
+		{
+//			std::cerr << "If wanna return from : " << ctx -> suite()[i] -> getText() << std::endl;
+			antlrcpp::Any ret = visitSuite(ctx -> suite()[i]);
+			if (ret.is<RETURN_SIGN>())
+			{
+//				std::cerr << "if_stmt : Catch and throw RETURN" << std::endl;
+//				assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+			}
+			return ret;
+		}
 	if (ctx -> ELSE() != nullptr) return visitSuite(ctx -> suite().back());
 	return nullptr;
 }
@@ -143,17 +185,32 @@ antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx
 
 antlrcpp::Any EvalVisitor::visitSuite(Python3Parser::SuiteContext *ctx)
 {
+	static int cnt = 0;++ cnt;
+//	std::cerr << ctx -> getText() << " " << cnt << std::endl;
 	crt.push(std::vector<std::string>());
 	antlrcpp::Any ret;
 	if (ctx -> simple_stmt() != nullptr) ret = visitSimple_stmt(ctx -> simple_stmt());
 	else for (int i = 0 , tot = (int)ctx -> stmt().size();i < tot;++ i)
 	{
+//		std::cerr << "Suite wanna step into: " << ctx -> stmt()[i] -> getText() << std::endl;
 		ret = visitStmt(ctx -> stmt()[i]);
+		if (ret.is<BREAK_SIGN>())
+		{
+//			std::cerr << "suite : Catch and throw BREAK" << std::endl;
+//			assert(ret.as<RETURN_SIGN>().ret.is<std::vector<dtype> >());
+		}
+//		if (ret.is<CONTINUE_SIGN>()) std::cerr << "suite : Catch and throw CONTINUE" << std::endl;
+		if (ret.is<RETURN_SIGN>())
+		{
+//			std::cerr << "suite : Catch and throw RETURN" << std::endl;
+		}
 		if (ret.is<BREAK_SIGN>() || ret.is<CONTINUE_SIGN>() || ret.is<RETURN_SIGN>()) break;
 	}
 	name_space &nsp = stack_workspace.top();
 	for (std::string x: crt.top()) nsp.remove(x);
-	return crt.pop() , ret;
+//	if (ret.is<RETURN_SIGN>()) std::cerr << "Yes , I did break and it's still a return sign." << cnt << std::endl;
+	crt.pop()/* , std::cerr << "Suite return. " << cnt -- << std::endl*/;
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitTest(Python3Parser::TestContext *ctx)
@@ -211,7 +268,7 @@ antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx
 
 antlrcpp::Any EvalVisitor::visitComp_op(Python3Parser::Comp_opContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitArith_expr(Python3Parser::Arith_exprContext *ctx)
@@ -225,7 +282,7 @@ antlrcpp::Any EvalVisitor::visitArith_expr(Python3Parser::Arith_exprContext *ctx
 
 antlrcpp::Any EvalVisitor::visitAddorsub_op(Python3Parser::Addorsub_opContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitTerm(Python3Parser::TermContext *ctx)
@@ -249,7 +306,7 @@ antlrcpp::Any EvalVisitor::visitTerm(Python3Parser::TermContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitMuldivmod_op(Python3Parser::Muldivmod_opContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitFactor(Python3Parser::FactorContext *ctx)
@@ -264,12 +321,18 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	if (ctx -> trailer() == nullptr) return visitAtom(ctx -> atom());
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("print"))
 	{
+		std::vector<dtype> ret;
 		if (ctx -> trailer() -> arglist() != nullptr)
 			for (int i = 0 , tot = (int)ctx -> trailer() -> arglist() -> argument().size();i < tot;++ i)
 			{
-				if (i) std::cout << " ";
-				std::cout << visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<dtype>();
+				std::vector<dtype> tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<std::vector<dtype> >();
+				for (auto x : tmp) ret.push_back(x);
 			}
+		for (int i = 0 , tot = (int)ret.size();i < tot;++ i)
+		{
+			if (i) std::cout << " ";
+			std::cout << ret[i];
+		}
 		std::cout << std::endl;
 		return nullptr;
 	}
@@ -296,44 +359,52 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	else
 	{
 		Python3Parser::FuncdefContext *func_node = visitAtom(ctx -> atom()).as<Python3Parser::FuncdefContext*>();
+		name_space new_name_space;
 		bool was_global_block = name_space::is_global_block;
-		stack_workspace.push(name_space());
-		name_space &nsp = stack_workspace.top();name_space::is_global_block = 0;
 		if (ctx -> trailer() -> arglist() != nullptr)
 		{
 			std::map<std::string , bool> ext;
 			Python3Parser::TypedargslistContext *tdl_node = func_node -> parameters() -> typedargslist();
 			for (int i = 0 , tot = (int)ctx -> trailer() -> arglist() -> argument().size();i < tot;++ i)
 				if (ctx -> trailer() -> arglist() -> argument()[i] -> ASSIGN() == nullptr)
-					nsp[tdl_node -> tfpdef()[i] -> NAME() -> getText()] = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<dtype>();
+				{
+					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<dtype>();
+					name_space::is_global_block = 0 , new_name_space[tdl_node -> tfpdef()[i] -> NAME() -> getText()] = tmp , name_space::is_global_block = was_global_block;
+				}
 				else
 				{
 					std::string var_name = ctx -> trailer() -> arglist() -> argument()[i] -> test()[0] -> or_test() -> and_test()[0] -> not_test()[0] -> comparison() -> arith_expr()[0] -> term()[0] -> factor()[0] -> atom_expr() -> atom() -> NAME() -> getText();
-					nsp[var_name] = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<dtype>();
-					ext[var_name] = 1;
+					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<dtype>();
+					name_space::is_global_block = 0 , new_name_space[var_name] = tmp , name_space::is_global_block = was_global_block , ext[var_name] = 1;
 				}
 			for (int tot = (int) tdl_node -> tfpdef().size() , i = tot - (int) tdl_node -> test().size() , j = 0;i < tot;++ i , ++ j)
 			{
 				std::string var_name = tdl_node -> tfpdef()[i] -> NAME() -> getText();
-				if (!ext[var_name]) nsp[var_name] = visitTest(tdl_node -> test()[j]);
+				if (!ext[var_name]) new_name_space[var_name] = visitTest(tdl_node -> test()[j]);
 			}
 		}
+		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
 		if (!ret.is<RETURN_SIGN>()) ret = nullptr;
 		else
 		{
-			std::vector<dtype> tmp = ret.as<RETURN_SIGN>().ret;
-			if (tmp.empty()) ret = nullptr;
-			else if ((int)tmp.size() == 1) ret = tmp.front();
-			else ret = tmp;
+			ret = Return_Value , Return_Value = nullptr;
+			if (!ret.is<std::vector<dtype> >()) ret = nullptr;
+			else
+			{
+				std::vector<dtype> tmp = ret.as<std::vector<dtype> >();
+				if (tmp.empty()) ret = nullptr;
+				else ret = tmp;
+			}
 		}
-		return stack_workspace.pop() , name_space::is_global_block = was_global_block , ret;
+		stack_workspace.pop() , name_space::is_global_block = was_global_block;
+		return ret;
 	}
 }
 
 antlrcpp::Any EvalVisitor::visitTrailer(Python3Parser::TrailerContext *ctx)
 {
-	return visitChildren(ctx);
+	return visitArglist(ctx -> arglist());
 }
 
 antlrcpp::Any EvalVisitor::visitAtom(Python3Parser::AtomContext *ctx)
@@ -367,18 +438,26 @@ antlrcpp::Any EvalVisitor::visitAtom(Python3Parser::AtomContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitTestlist(Python3Parser::TestlistContext *ctx)
 {
-	if ((int)ctx -> test().size() == 1) return visitTest(ctx -> test()[0]);
 	std::vector<dtype> ret;
-	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i) ret.push_back(visitTest(ctx -> test()[i]).as<dtype>());
+	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i)
+	{
+		antlrcpp::Any tmp = visitTest(ctx -> test()[i]);
+		if (tmp.is<dtype>()) ret.push_back(tmp.as<dtype>());
+		else if (tmp.is<std::vector<dtype> >())
+		{
+			std::vector<dtype> vec = tmp.as<std::vector<dtype> >();
+			for (auto x : vec) ret.push_back(x);
+		}
+	}
 	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitArglist(Python3Parser::ArglistContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }
 
 antlrcpp::Any EvalVisitor::visitArgument(Python3Parser::ArgumentContext *ctx)
 {
-	return visitChildren(ctx);
+	return /*visitChildren(ctx)*/nullptr;
 }

@@ -41,7 +41,7 @@ Python3Parser::FuncdefContext *name_space::operator()(const std::string &func_na
 			it = func_sys.find(func_name);
 			if (it == func_sys.end()) return nullptr;
 		}else return nullptr;
-	return it == func_sys.end() ? nullptr : it -> second;
+	return it == static_func_sys.end() ? nullptr : it -> second;
 }
 
 void name_space::create(const std::pair<std::string , Python3Parser::FuncdefContext*> &x)

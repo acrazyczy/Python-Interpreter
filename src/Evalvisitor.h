@@ -9,24 +9,20 @@
 #include "Name_Space.h"
 
 class EvalVisitor: public Python3BaseVisitor {
-
 private:
-	std::stack<std::vector<std::string> > crt;
-	std::stack<name_space> stack_workspace;
-
-	int loop_cnt = 0;
 
 	class BREAK_SIGN{};
 
 	class CONTINUE_SIGN{};
 
-	class RETURN_SIGN
-	{
-	public:
-		antlrcpp::Any ret;
+	class RETURN_SIGN{};
 
-		RETURN_SIGN(const antlrcpp::Any &ret_){ret = ret_;};
-	};
+	antlrcpp::Any Return_Value;
+
+	std::stack<std::vector<std::string> > crt;
+	std::stack<name_space> stack_workspace;
+
+	int loop_cnt = 0;
 
 //todo:override all methods of Python3BaseVisitor
 public:

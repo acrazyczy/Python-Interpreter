@@ -1,0 +1,27 @@
+D:\Academy\OIACM\Code\Homework\Compiler\python\Python_Assignment-master\cmake-build-debug\code
+      ifa<b:          returngcd(b,a)   ifb==0:          returna   returngcd(b,a%b)
+
+
+ 1
+Suite wanna step into: ifa<b:          returngcd(b,a)   
+Suite wanna step into: ifb==0:          returna   
+Suite wanna step into: returngcd(b,a%b)
+
+
+      ifa<b:          returngcd(b,a)   ifb==0:          returna   returngcd(b,a%b)
+
+
+ 2
+Suite wanna step into: ifa<b:          returngcd(b,a)   
+Suite wanna step into: ifb==0:          returna   
+If wanna return from :           returna   
+          returna    3
+Suite wanna step into: returna  
+Throw RETURN
+flow_stmt : Catch and throw RETURN
+small_stmt : Catch and throw RETURN
+simple_stmt : Catch and throw RETURN
+stmt : Catch and throw RETURN
+suite : Catch and throw RETURN
+Yes , I did break. 3
+Suite return. 3
