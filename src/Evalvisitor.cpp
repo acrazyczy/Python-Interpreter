@@ -181,7 +181,7 @@ antlrcpp::Any EvalVisitor::visitOr_test(Python3Parser::Or_testContext *ctx)
 antlrcpp::Any EvalVisitor::visitAnd_test(Python3Parser::And_testContext *ctx)
 {
 	if ((int)ctx -> not_test().size() == 1) return visitNot_test(ctx -> not_test()[0]);
-	dtype ret = visitNot_test(ctx -> not_test()[0]).as<dtype>();
+	dtype ret = visitNot_test(ctx -> not_test()[0]).as<std::vector<dtype> >()[0];
 	for (int i = 1 , tot = (int)ctx -> not_test().size();i < tot;++ i) ret &= visitNot_test(ctx -> not_test()[i]).as<std::vector<dtype> >()[0];
 	return std::vector<dtype>(1 , ret);
 }
@@ -294,22 +294,22 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("int"))
 	{
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype(integer(std::string("0"))));
-		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<dtype>().to_int());
+		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_int());
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("float"))
 	{
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype((double)0.));
-		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<dtype>().to_float());
+		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_float());
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("str"))
 	{
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype(std::string("0")));
-		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<dtype>().to_str());
+		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_str());
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("bool"))
 	{
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype(false));
-		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<dtype>().to_bool());
+		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_bool());
 	}
 	else
 	{
@@ -396,11 +396,10 @@ antlrcpp::Any EvalVisitor::visitTestlist(Python3Parser::TestlistContext *ctx)
 	std::vector<dtype> ret;
 	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i)
 	{
-		antlrcpp::Any tmp = visitTest(ctx -> test()[i]);
-		if (tmp.is<dtype>()) ret.push_back(tmp.as<dtype>());
-		else if (tmp.is<std::vector<dtype> >())
+		antlrcpp::Any ptr = visitTest(ctx -> test()[i]);
+		if (ptr.is<std::vector<dtype> >())
 		{
-			std::vector<dtype> vec = tmp.as<std::vector<dtype> >();
+			std::vector<dtype> vec = ptr.as<std::vector<dtype> >();
 			for (auto x : vec) ret.push_back(x);
 		}
 	}
