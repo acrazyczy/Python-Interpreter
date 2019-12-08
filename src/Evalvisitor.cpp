@@ -189,7 +189,7 @@ antlrcpp::Any EvalVisitor::visitAnd_test(Python3Parser::And_testContext *ctx)
 antlrcpp::Any EvalVisitor::visitNot_test(Python3Parser::Not_testContext *ctx)
 {
 	if (ctx -> not_test() == nullptr) return visitComparison(ctx -> comparison());
-	return !visitNot_test(ctx -> not_test()).as<std::vector<dtype> >()[0];
+	return std::vector<dtype>(1 , !visitNot_test(ctx -> not_test()).as<std::vector<dtype> >()[0]);
 }
 
 antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx)
@@ -230,7 +230,7 @@ antlrcpp::Any EvalVisitor::visitArith_expr(Python3Parser::Arith_exprContext *ctx
 	dtype ret = visitTerm(ctx -> term()[0]).as<std::vector<dtype> >()[0];
 	for (int i = 0 , tot = (int)ctx -> addorsub_op().size();i < tot;++ i)
 		ctx -> addorsub_op()[i] -> getText()[0] == '+' ? ret += visitTerm(ctx -> term()[i + 1]).as<std::vector<dtype> >()[0] : ret -= visitTerm(ctx -> term()[i + 1]).as<std::vector<dtype> >()[0];
-	return ret;
+	return std::vector<dtype>(1 , ret);
 }
 
 antlrcpp::Any EvalVisitor::visitAddorsub_op(Python3Parser::Addorsub_opContext *ctx)
