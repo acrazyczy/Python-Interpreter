@@ -1,11 +1,13 @@
-# gcd
-def gcd(a,b):
-    if a<b:
-        return gcd(b,a)
-    if b==0:
-        return a
-    return gcd(b,a%b)
-
-print(gcd(300,15))
-print(gcd(300,16))
-print(gcd(300,17))
+# arg list
+a,b=1,2
+print(a,b)
+def f(p,q,r):
+    p+=q
+    r-=q
+    print(p,q,r)
+    return p,q,r
+a,b,c=f(3,1,3)
+print("a",a)
+print('b',b)
+print('c',c)
+print(a,b,c)

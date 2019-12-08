@@ -15,9 +15,13 @@ private:
 
 	class CONTINUE_SIGN{};
 
-	class RETURN_SIGN{};
+	class RETURN_SIGN
+	{
+	public:
+		antlrcpp::Any ret_val;
 
-	antlrcpp::Any Return_Value;
+		RETURN_SIGN(const antlrcpp::Any ret_val_){ret_val = ret_val_;}
+	};
 
 	std::stack<std::vector<std::string> > crt;
 	std::stack<name_space> stack_workspace;
