@@ -33,7 +33,8 @@ antlrcpp::Any EvalVisitor::visitTfpdef(Python3Parser::TfpdefContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitStmt(Python3Parser::StmtContext *ctx)
 {
-	antlrcpp::Any ret = ctx -> simple_stmt() == nullptr ? visitCompound_stmt(ctx -> compound_stmt()) : visitSimple_stmt(ctx -> simple_stmt());	return ret;
+	antlrcpp::Any ret = ctx -> simple_stmt() == nullptr ? visitCompound_stmt(ctx -> compound_stmt()) : visitSimple_stmt(ctx -> simple_stmt());
+	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitSimple_stmt(Python3Parser::Simple_stmtContext *ctx)
@@ -53,7 +54,7 @@ antlrcpp::Any EvalVisitor::visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx)
 	antlrcpp::Any tmp = visitTestlist(ctx -> testlist().back());
 	std::vector<dtype> ret;
 	if (tmp.is<std::vector<dtype> >()) ret = tmp.as<std::vector<dtype> >();
-	else return nullptr;
+	else return ret;
 	name_space &nsp = stack_workspace.top();
 	if (ctx -> augassign() != nullptr)
 	{
@@ -108,6 +109,7 @@ antlrcpp::Any EvalVisitor::visitReturn_stmt(Python3Parser::Return_stmtContext *c
 {
 	antlrcpp::Any ret;
 	if (ctx -> testlist() != nullptr) ret = visitTestlist(ctx -> testlist());
+	else ret = std::vector<dtype>(1 , dtype());
 	return RETURN_SIGN(ret);
 }
 
@@ -340,15 +342,15 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
-		if (!ret.is<RETURN_SIGN>()) ret = nullptr;
+		if (!ret.is<RETURN_SIGN>()) ret = std::vector<dtype>(1 , dtype());
 		else
 		{
 			ret = ret.as<RETURN_SIGN>().ret_val;
-			if (!ret.is<std::vector<dtype> >()) ret = nullptr;
+			if (!ret.is<std::vector<dtype> >()) ret = std::vector<dtype>(1 , dtype());
 			else
 			{
 				std::vector<dtype> tmp = ret.as<std::vector<dtype> >();
-				if (tmp.empty()) ret = nullptr;
+				if (tmp.empty()) ret = std::vector<dtype>(1 , dtype());
 				else ret = tmp;
 			}
 		}

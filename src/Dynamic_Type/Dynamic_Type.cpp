@@ -133,7 +133,7 @@ dtype::operator double() const
 	return ret;
 }
 
-dtype::operator std::string() const {return current_type == is_null ? std::string() : (current_type == is_str ? str_var : (current_type == is_float ? std::to_string(float_var) : (current_type == is_int ? std::string(int_var) : (bool_var ? std::string("True") : std::string("False")))));}
+dtype::operator std::string() const {return current_type == is_null ? std::string("None") : (current_type == is_str ? str_var : (current_type == is_float ? std::to_string(float_var) : (current_type == is_int ? std::string(int_var) : (bool_var ? std::string("True") : std::string("False")))));}
 
 dtype &dtype::to_bool(){return (*this) = dtype((bool)(*this));}
 
