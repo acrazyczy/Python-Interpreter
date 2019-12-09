@@ -1,16 +1,10 @@
-def haha(a):
-	return 998244353
-
-def quick_power(x , y , p = haha(3)):
-	ret = 1
-	while y != 0:
-		if y % 2 == 1:
-			ret *= x
-			ret %= p
-		x *= x
-		x %= p
-		y //= 2
-	return ret
-#print (quick_power(12,2,5))
-print (quick_power(2,998244351))
-print (1<3>2)
+cnt0 = 0
+cnt1 = 0
+def add0():
+	cnt0 += 1
+	return cnt0
+def add1():
+	cnt1 += 2
+	return cnt1
+x = add0() > add1() == add0()
+print (x)
