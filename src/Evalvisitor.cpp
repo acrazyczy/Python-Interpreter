@@ -166,7 +166,6 @@ antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx
 
 antlrcpp::Any EvalVisitor::visitSuite(Python3Parser::SuiteContext *ctx)
 {
-	static int cnt = 0;++ cnt;
 	crt.push(std::vector<std::string>());
 	antlrcpp::Any ret;
 	if (ctx -> simple_stmt() != nullptr) ret = visitSimple_stmt(ctx -> simple_stmt());
@@ -281,7 +280,7 @@ antlrcpp::Any EvalVisitor::visitMuldivmod_op(Python3Parser::Muldivmod_opContext 
 antlrcpp::Any EvalVisitor::visitFactor(Python3Parser::FactorContext *ctx)
 {
 	if (ctx -> atom_expr() == nullptr)
-		return ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0] : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0];
+		return std::vector<dtype>(1 , ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0] : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0]);
 	return visitAtom_expr(ctx -> atom_expr());
 }
 

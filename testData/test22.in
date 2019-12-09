@@ -1,3 +1,4 @@
+#Pollard Rho
 def quick_power(x , y , p) :
 	ret = 1
 	while y != 0 :
