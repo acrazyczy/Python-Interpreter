@@ -16,6 +16,7 @@ class name_space
 private:
 	static std::map<std::string , dtype> static_var_sys;
 	static std::map<std::string , Python3Parser::FuncdefContext*> static_func_sys;
+	static std::map<Python3Parser::FuncdefContext* , std::vector<std::pair<std::string , dtype> > > func_table;
 
 	std::map<std::string , dtype> var_sys;
 	std::map<std::string , Python3Parser::FuncdefContext*> func_sys;
@@ -29,6 +30,8 @@ public:
 
 	Python3Parser::FuncdefContext *operator()(const std::string &func_name) const;//If the function doesn't exist, then return nullptr;
 	void create(const std::pair<std::string , Python3Parser::FuncdefContext*> &x);
+
+	std::vector<std::pair<std::string , dtype> > &getarglist(Python3Parser::FuncdefContext* ptr) const;
 
 	~name_space(){}
 };

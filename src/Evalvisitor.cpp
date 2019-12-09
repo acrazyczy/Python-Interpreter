@@ -13,6 +13,18 @@ antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
 	name_space &nsp = stack_workspace.top();
 	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , crt.top().push_back(ctx -> NAME() -> getText());
+	std::vector<std::pair<std::string , dtype> > &func_arglist = nsp.getarglist(ctx);
+	Python3Parser::TypedargslistContext *tdl_node = ctx -> parameters() -> typedargslist();
+	for (int i = 0 , tot = (int)tdl_node -> tfpdef().size() - (int)tdl_node -> test().size();i < tot;++ i)
+	{
+		std::string var_name = tdl_node -> tfpdef()[i] -> NAME() -> getText();
+		func_arglist.push_back(std::make_pair(var_name , dtype()));
+	}
+	for (int tot = (int) tdl_node -> tfpdef().size() , i = tot - (int) tdl_node -> test().size() , j = 0;i < tot;++ i , ++ j)
+	{
+		std::string var_name = tdl_node -> tfpdef()[i] -> NAME() -> getText();
+		func_arglist.push_back(std::make_pair(var_name , visitTest(tdl_node -> test()[j]).as<std::vector<dtype> >()[0]));
+	}
 	return nullptr;
 }
 
@@ -130,7 +142,6 @@ antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 	if (ctx -> ELSE() != nullptr) return visitSuite(ctx -> suite().back());
 	return nullptr;
 }
-
 
 antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx)
 {
@@ -321,12 +332,12 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 		if (ctx -> trailer() -> arglist() != nullptr)
 		{
 			std::map<std::string , bool> ext;
-			Python3Parser::TypedargslistContext *tdl_node = func_node -> parameters() -> typedargslist();
+			std::vector<std::pair<std::string , dtype> > &func_arglist = stack_workspace.top().getarglist(func_node);
 			for (int i = 0 , tot = (int)ctx -> trailer() -> arglist() -> argument().size();i < tot;++ i)
 				if (ctx -> trailer() -> arglist() -> argument()[i] -> ASSIGN() == nullptr)
 				{
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<std::vector<dtype> >()[0];
-					name_space::is_global_block = 0 , new_name_space[tdl_node -> tfpdef()[i] -> NAME() -> getText()] = tmp , name_space::is_global_block = was_global_block;
+					name_space::is_global_block = 0 , new_name_space[func_arglist[i].first] = tmp , name_space::is_global_block = was_global_block , ext[func_arglist[i].first] = 1;
 				}
 				else
 				{
@@ -334,10 +345,10 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<std::vector<dtype> >()[0];
 					name_space::is_global_block = 0 , new_name_space[var_name] = tmp , name_space::is_global_block = was_global_block , ext[var_name] = 1;
 				}
-			for (int tot = (int) tdl_node -> tfpdef().size() , i = tot - (int) tdl_node -> test().size() , j = 0;i < tot;++ i , ++ j)
+			for (int i = 0 , tot = (int)func_arglist.size();i < tot;++ i)
 			{
-				std::string var_name = tdl_node -> tfpdef()[i] -> NAME() -> getText();
-				if (!ext[var_name]) new_name_space[var_name] = visitTest(tdl_node -> test()[j]).as<std::vector<dtype> >()[0];
+				std::string var_name = func_arglist[i].first;
+				if (!ext[var_name]) new_name_space[var_name] = func_arglist[i].second;
 			}
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;

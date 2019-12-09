@@ -8,6 +8,7 @@ bool name_space::is_global_block = 1;
 
 std::map<std::string , dtype> name_space::static_var_sys;
 std::map<std::string , Python3Parser::FuncdefContext*> name_space::static_func_sys;
+std::map<Python3Parser::FuncdefContext* , std::vector<std::pair<std::string , dtype> > > name_space::func_table;
 
 dtype &name_space::operator[](const std::string &var_name)
 {
@@ -47,4 +48,10 @@ Python3Parser::FuncdefContext *name_space::operator()(const std::string &func_na
 void name_space::create(const std::pair<std::string , Python3Parser::FuncdefContext*> &x)
 {
 	is_global_block ? static_func_sys.insert(x) : func_sys.insert(x);
+	func_table.insert(std::make_pair(x.second , std::vector< std::pair<std::string , dtype> >()));
+}
+
+std::vector<std::pair<std::string , dtype> > &name_space::getarglist(Python3Parser::FuncdefContext* ptr) const
+{
+	return func_table[ptr];
 }
