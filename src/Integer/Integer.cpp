@@ -192,7 +192,7 @@ integer::operator double() const
 	return ret;
 }
 
-integer::operator bool() const {return is_zero();}
+integer::operator bool() const {return !is_zero();}
 integer::operator std::string() const
 {
 	char* buf = new char [len + (int)!sig];
