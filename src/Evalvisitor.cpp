@@ -1,3 +1,4 @@
+#include <cassert>
 #include "Evalvisitor.h"
 
 antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx)
@@ -11,6 +12,7 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
+	assert(0);
 	name_space &nsp = stack_workspace.top();
 	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , crt.top().push_back(ctx -> NAME() -> getText());
 	std::vector<std::pair<std::string , dtype> > &func_arglist = nsp.getarglist(ctx);
