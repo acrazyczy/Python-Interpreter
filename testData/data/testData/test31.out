@@ -1,0 +1,559 @@
+python_list_myList_suffix=0
+python_list_myList_index_0_suffix=None
+python_list_myList_index_1_suffix=None
+python_list_myList_index_2_suffix=None
+python_list_myList_index_3_suffix=None
+python_list_myList_index_4_suffix=None
+python_list_myList_index_5_suffix=None
+python_list_myList_index_6_suffix=None
+python_list_myList_index_7_suffix=None
+python_list_myList_index_8_suffix=None
+python_list_myList_index_9_suffix=None
+def set_myList(i,value):
+    if i==0:
+        python_list_myList_index_0_suffix=value
+    elif i==1:
+        python_list_myList_index_1_suffix=value
+    elif i==2:
+        python_list_myList_index_2_suffix=value
+    elif i==3:
+        python_list_myList_index_3_suffix=value
+    elif i==4:
+        python_list_myList_index_4_suffix=value
+    elif i==5:
+        python_list_myList_index_5_suffix=value
+    elif i==6:
+        python_list_myList_index_6_suffix=value
+    elif i==7:
+        python_list_myList_index_7_suffix=value
+    elif i==8:
+        python_list_myList_index_8_suffix=value
+    elif i==9:
+        python_list_myList_index_9_suffix=value
+    else:print("myList: error: invalid index.")
+def get_myList(i):
+    if i==0:
+        return python_list_myList_index_0_suffix
+    elif i==1:
+        return python_list_myList_index_1_suffix
+    elif i==2:
+        return python_list_myList_index_2_suffix
+    elif i==3:
+        return python_list_myList_index_3_suffix
+    elif i==4:
+        return python_list_myList_index_4_suffix
+    elif i==5:
+        return python_list_myList_index_5_suffix
+    elif i==6:
+        return python_list_myList_index_6_suffix
+    elif i==7:
+        return python_list_myList_index_7_suffix
+    elif i==8:
+        return python_list_myList_index_8_suffix
+    elif i==9:
+        return python_list_myList_index_9_suffix
+    else:
+        print("myList: error: invalid index.")
+        return None
+python_list_arr_suffix=0
+python_list_arr_index_0_suffix=None
+python_list_arr_index_1_suffix=None
+python_list_arr_index_2_suffix=None
+python_list_arr_index_3_suffix=None
+python_list_arr_index_4_suffix=None
+python_list_arr_index_5_suffix=None
+python_list_arr_index_6_suffix=None
+python_list_arr_index_7_suffix=None
+python_list_arr_index_8_suffix=None
+python_list_arr_index_9_suffix=None
+python_list_arr_index_10_suffix=None
+python_list_arr_index_11_suffix=None
+python_list_arr_index_12_suffix=None
+python_list_arr_index_13_suffix=None
+python_list_arr_index_14_suffix=None
+python_list_arr_index_15_suffix=None
+python_list_arr_index_16_suffix=None
+python_list_arr_index_17_suffix=None
+python_list_arr_index_18_suffix=None
+python_list_arr_index_19_suffix=None
+python_list_arr_index_20_suffix=None
+python_list_arr_index_21_suffix=None
+python_list_arr_index_22_suffix=None
+python_list_arr_index_23_suffix=None
+python_list_arr_index_24_suffix=None
+python_list_arr_index_25_suffix=None
+python_list_arr_index_26_suffix=None
+python_list_arr_index_27_suffix=None
+python_list_arr_index_28_suffix=None
+python_list_arr_index_29_suffix=None
+python_list_arr_index_30_suffix=None
+python_list_arr_index_31_suffix=None
+python_list_arr_index_32_suffix=None
+python_list_arr_index_33_suffix=None
+python_list_arr_index_34_suffix=None
+python_list_arr_index_35_suffix=None
+python_list_arr_index_36_suffix=None
+python_list_arr_index_37_suffix=None
+python_list_arr_index_38_suffix=None
+python_list_arr_index_39_suffix=None
+python_list_arr_index_40_suffix=None
+python_list_arr_index_41_suffix=None
+python_list_arr_index_42_suffix=None
+python_list_arr_index_43_suffix=None
+python_list_arr_index_44_suffix=None
+python_list_arr_index_45_suffix=None
+python_list_arr_index_46_suffix=None
+python_list_arr_index_47_suffix=None
+python_list_arr_index_48_suffix=None
+python_list_arr_index_49_suffix=None
+python_list_arr_index_50_suffix=None
+python_list_arr_index_51_suffix=None
+python_list_arr_index_52_suffix=None
+python_list_arr_index_53_suffix=None
+python_list_arr_index_54_suffix=None
+python_list_arr_index_55_suffix=None
+python_list_arr_index_56_suffix=None
+python_list_arr_index_57_suffix=None
+python_list_arr_index_58_suffix=None
+python_list_arr_index_59_suffix=None
+python_list_arr_index_60_suffix=None
+python_list_arr_index_61_suffix=None
+python_list_arr_index_62_suffix=None
+python_list_arr_index_63_suffix=None
+python_list_arr_index_64_suffix=None
+python_list_arr_index_65_suffix=None
+python_list_arr_index_66_suffix=None
+python_list_arr_index_67_suffix=None
+python_list_arr_index_68_suffix=None
+python_list_arr_index_69_suffix=None
+python_list_arr_index_70_suffix=None
+python_list_arr_index_71_suffix=None
+python_list_arr_index_72_suffix=None
+python_list_arr_index_73_suffix=None
+python_list_arr_index_74_suffix=None
+python_list_arr_index_75_suffix=None
+python_list_arr_index_76_suffix=None
+python_list_arr_index_77_suffix=None
+python_list_arr_index_78_suffix=None
+python_list_arr_index_79_suffix=None
+python_list_arr_index_80_suffix=None
+python_list_arr_index_81_suffix=None
+python_list_arr_index_82_suffix=None
+python_list_arr_index_83_suffix=None
+python_list_arr_index_84_suffix=None
+python_list_arr_index_85_suffix=None
+python_list_arr_index_86_suffix=None
+python_list_arr_index_87_suffix=None
+python_list_arr_index_88_suffix=None
+python_list_arr_index_89_suffix=None
+python_list_arr_index_90_suffix=None
+python_list_arr_index_91_suffix=None
+python_list_arr_index_92_suffix=None
+python_list_arr_index_93_suffix=None
+python_list_arr_index_94_suffix=None
+python_list_arr_index_95_suffix=None
+python_list_arr_index_96_suffix=None
+python_list_arr_index_97_suffix=None
+python_list_arr_index_98_suffix=None
+def set_arr(i,value):
+    if i==0:
+        python_list_arr_index_0_suffix=value
+    elif i==1:
+        python_list_arr_index_1_suffix=value
+    elif i==2:
+        python_list_arr_index_2_suffix=value
+    elif i==3:
+        python_list_arr_index_3_suffix=value
+    elif i==4:
+        python_list_arr_index_4_suffix=value
+    elif i==5:
+        python_list_arr_index_5_suffix=value
+    elif i==6:
+        python_list_arr_index_6_suffix=value
+    elif i==7:
+        python_list_arr_index_7_suffix=value
+    elif i==8:
+        python_list_arr_index_8_suffix=value
+    elif i==9:
+        python_list_arr_index_9_suffix=value
+    elif i==10:
+        python_list_arr_index_10_suffix=value
+    elif i==11:
+        python_list_arr_index_11_suffix=value
+    elif i==12:
+        python_list_arr_index_12_suffix=value
+    elif i==13:
+        python_list_arr_index_13_suffix=value
+    elif i==14:
+        python_list_arr_index_14_suffix=value
+    elif i==15:
+        python_list_arr_index_15_suffix=value
+    elif i==16:
+        python_list_arr_index_16_suffix=value
+    elif i==17:
+        python_list_arr_index_17_suffix=value
+    elif i==18:
+        python_list_arr_index_18_suffix=value
+    elif i==19:
+        python_list_arr_index_19_suffix=value
+    elif i==20:
+        python_list_arr_index_20_suffix=value
+    elif i==21:
+        python_list_arr_index_21_suffix=value
+    elif i==22:
+        python_list_arr_index_22_suffix=value
+    elif i==23:
+        python_list_arr_index_23_suffix=value
+    elif i==24:
+        python_list_arr_index_24_suffix=value
+    elif i==25:
+        python_list_arr_index_25_suffix=value
+    elif i==26:
+        python_list_arr_index_26_suffix=value
+    elif i==27:
+        python_list_arr_index_27_suffix=value
+    elif i==28:
+        python_list_arr_index_28_suffix=value
+    elif i==29:
+        python_list_arr_index_29_suffix=value
+    elif i==30:
+        python_list_arr_index_30_suffix=value
+    elif i==31:
+        python_list_arr_index_31_suffix=value
+    elif i==32:
+        python_list_arr_index_32_suffix=value
+    elif i==33:
+        python_list_arr_index_33_suffix=value
+    elif i==34:
+        python_list_arr_index_34_suffix=value
+    elif i==35:
+        python_list_arr_index_35_suffix=value
+    elif i==36:
+        python_list_arr_index_36_suffix=value
+    elif i==37:
+        python_list_arr_index_37_suffix=value
+    elif i==38:
+        python_list_arr_index_38_suffix=value
+    elif i==39:
+        python_list_arr_index_39_suffix=value
+    elif i==40:
+        python_list_arr_index_40_suffix=value
+    elif i==41:
+        python_list_arr_index_41_suffix=value
+    elif i==42:
+        python_list_arr_index_42_suffix=value
+    elif i==43:
+        python_list_arr_index_43_suffix=value
+    elif i==44:
+        python_list_arr_index_44_suffix=value
+    elif i==45:
+        python_list_arr_index_45_suffix=value
+    elif i==46:
+        python_list_arr_index_46_suffix=value
+    elif i==47:
+        python_list_arr_index_47_suffix=value
+    elif i==48:
+        python_list_arr_index_48_suffix=value
+    elif i==49:
+        python_list_arr_index_49_suffix=value
+    elif i==50:
+        python_list_arr_index_50_suffix=value
+    elif i==51:
+        python_list_arr_index_51_suffix=value
+    elif i==52:
+        python_list_arr_index_52_suffix=value
+    elif i==53:
+        python_list_arr_index_53_suffix=value
+    elif i==54:
+        python_list_arr_index_54_suffix=value
+    elif i==55:
+        python_list_arr_index_55_suffix=value
+    elif i==56:
+        python_list_arr_index_56_suffix=value
+    elif i==57:
+        python_list_arr_index_57_suffix=value
+    elif i==58:
+        python_list_arr_index_58_suffix=value
+    elif i==59:
+        python_list_arr_index_59_suffix=value
+    elif i==60:
+        python_list_arr_index_60_suffix=value
+    elif i==61:
+        python_list_arr_index_61_suffix=value
+    elif i==62:
+        python_list_arr_index_62_suffix=value
+    elif i==63:
+        python_list_arr_index_63_suffix=value
+    elif i==64:
+        python_list_arr_index_64_suffix=value
+    elif i==65:
+        python_list_arr_index_65_suffix=value
+    elif i==66:
+        python_list_arr_index_66_suffix=value
+    elif i==67:
+        python_list_arr_index_67_suffix=value
+    elif i==68:
+        python_list_arr_index_68_suffix=value
+    elif i==69:
+        python_list_arr_index_69_suffix=value
+    elif i==70:
+        python_list_arr_index_70_suffix=value
+    elif i==71:
+        python_list_arr_index_71_suffix=value
+    elif i==72:
+        python_list_arr_index_72_suffix=value
+    elif i==73:
+        python_list_arr_index_73_suffix=value
+    elif i==74:
+        python_list_arr_index_74_suffix=value
+    elif i==75:
+        python_list_arr_index_75_suffix=value
+    elif i==76:
+        python_list_arr_index_76_suffix=value
+    elif i==77:
+        python_list_arr_index_77_suffix=value
+    elif i==78:
+        python_list_arr_index_78_suffix=value
+    elif i==79:
+        python_list_arr_index_79_suffix=value
+    elif i==80:
+        python_list_arr_index_80_suffix=value
+    elif i==81:
+        python_list_arr_index_81_suffix=value
+    elif i==82:
+        python_list_arr_index_82_suffix=value
+    elif i==83:
+        python_list_arr_index_83_suffix=value
+    elif i==84:
+        python_list_arr_index_84_suffix=value
+    elif i==85:
+        python_list_arr_index_85_suffix=value
+    elif i==86:
+        python_list_arr_index_86_suffix=value
+    elif i==87:
+        python_list_arr_index_87_suffix=value
+    elif i==88:
+        python_list_arr_index_88_suffix=value
+    elif i==89:
+        python_list_arr_index_89_suffix=value
+    elif i==90:
+        python_list_arr_index_90_suffix=value
+    elif i==91:
+        python_list_arr_index_91_suffix=value
+    elif i==92:
+        python_list_arr_index_92_suffix=value
+    elif i==93:
+        python_list_arr_index_93_suffix=value
+    elif i==94:
+        python_list_arr_index_94_suffix=value
+    elif i==95:
+        python_list_arr_index_95_suffix=value
+    elif i==96:
+        python_list_arr_index_96_suffix=value
+    elif i==97:
+        python_list_arr_index_97_suffix=value
+    elif i==98:
+        python_list_arr_index_98_suffix=value
+    else:print("arr: error: invalid index.")
+def get_arr(i):
+    if i==0:
+        return python_list_arr_index_0_suffix
+    elif i==1:
+        return python_list_arr_index_1_suffix
+    elif i==2:
+        return python_list_arr_index_2_suffix
+    elif i==3:
+        return python_list_arr_index_3_suffix
+    elif i==4:
+        return python_list_arr_index_4_suffix
+    elif i==5:
+        return python_list_arr_index_5_suffix
+    elif i==6:
+        return python_list_arr_index_6_suffix
+    elif i==7:
+        return python_list_arr_index_7_suffix
+    elif i==8:
+        return python_list_arr_index_8_suffix
+    elif i==9:
+        return python_list_arr_index_9_suffix
+    elif i==10:
+        return python_list_arr_index_10_suffix
+    elif i==11:
+        return python_list_arr_index_11_suffix
+    elif i==12:
+        return python_list_arr_index_12_suffix
+    elif i==13:
+        return python_list_arr_index_13_suffix
+    elif i==14:
+        return python_list_arr_index_14_suffix
+    elif i==15:
+        return python_list_arr_index_15_suffix
+    elif i==16:
+        return python_list_arr_index_16_suffix
+    elif i==17:
+        return python_list_arr_index_17_suffix
+    elif i==18:
+        return python_list_arr_index_18_suffix
+    elif i==19:
+        return python_list_arr_index_19_suffix
+    elif i==20:
+        return python_list_arr_index_20_suffix
+    elif i==21:
+        return python_list_arr_index_21_suffix
+    elif i==22:
+        return python_list_arr_index_22_suffix
+    elif i==23:
+        return python_list_arr_index_23_suffix
+    elif i==24:
+        return python_list_arr_index_24_suffix
+    elif i==25:
+        return python_list_arr_index_25_suffix
+    elif i==26:
+        return python_list_arr_index_26_suffix
+    elif i==27:
+        return python_list_arr_index_27_suffix
+    elif i==28:
+        return python_list_arr_index_28_suffix
+    elif i==29:
+        return python_list_arr_index_29_suffix
+    elif i==30:
+        return python_list_arr_index_30_suffix
+    elif i==31:
+        return python_list_arr_index_31_suffix
+    elif i==32:
+        return python_list_arr_index_32_suffix
+    elif i==33:
+        return python_list_arr_index_33_suffix
+    elif i==34:
+        return python_list_arr_index_34_suffix
+    elif i==35:
+        return python_list_arr_index_35_suffix
+    elif i==36:
+        return python_list_arr_index_36_suffix
+    elif i==37:
+        return python_list_arr_index_37_suffix
+    elif i==38:
+        return python_list_arr_index_38_suffix
+    elif i==39:
+        return python_list_arr_index_39_suffix
+    elif i==40:
+        return python_list_arr_index_40_suffix
+    elif i==41:
+        return python_list_arr_index_41_suffix
+    elif i==42:
+        return python_list_arr_index_42_suffix
+    elif i==43:
+        return python_list_arr_index_43_suffix
+    elif i==44:
+        return python_list_arr_index_44_suffix
+    elif i==45:
+        return python_list_arr_index_45_suffix
+    elif i==46:
+        return python_list_arr_index_46_suffix
+    elif i==47:
+        return python_list_arr_index_47_suffix
+    elif i==48:
+        return python_list_arr_index_48_suffix
+    elif i==49:
+        return python_list_arr_index_49_suffix
+    elif i==50:
+        return python_list_arr_index_50_suffix
+    elif i==51:
+        return python_list_arr_index_51_suffix
+    elif i==52:
+        return python_list_arr_index_52_suffix
+    elif i==53:
+        return python_list_arr_index_53_suffix
+    elif i==54:
+        return python_list_arr_index_54_suffix
+    elif i==55:
+        return python_list_arr_index_55_suffix
+    elif i==56:
+        return python_list_arr_index_56_suffix
+    elif i==57:
+        return python_list_arr_index_57_suffix
+    elif i==58:
+        return python_list_arr_index_58_suffix
+    elif i==59:
+        return python_list_arr_index_59_suffix
+    elif i==60:
+        return python_list_arr_index_60_suffix
+    elif i==61:
+        return python_list_arr_index_61_suffix
+    elif i==62:
+        return python_list_arr_index_62_suffix
+    elif i==63:
+        return python_list_arr_index_63_suffix
+    elif i==64:
+        return python_list_arr_index_64_suffix
+    elif i==65:
+        return python_list_arr_index_65_suffix
+    elif i==66:
+        return python_list_arr_index_66_suffix
+    elif i==67:
+        return python_list_arr_index_67_suffix
+    elif i==68:
+        return python_list_arr_index_68_suffix
+    elif i==69:
+        return python_list_arr_index_69_suffix
+    elif i==70:
+        return python_list_arr_index_70_suffix
+    elif i==71:
+        return python_list_arr_index_71_suffix
+    elif i==72:
+        return python_list_arr_index_72_suffix
+    elif i==73:
+        return python_list_arr_index_73_suffix
+    elif i==74:
+        return python_list_arr_index_74_suffix
+    elif i==75:
+        return python_list_arr_index_75_suffix
+    elif i==76:
+        return python_list_arr_index_76_suffix
+    elif i==77:
+        return python_list_arr_index_77_suffix
+    elif i==78:
+        return python_list_arr_index_78_suffix
+    elif i==79:
+        return python_list_arr_index_79_suffix
+    elif i==80:
+        return python_list_arr_index_80_suffix
+    elif i==81:
+        return python_list_arr_index_81_suffix
+    elif i==82:
+        return python_list_arr_index_82_suffix
+    elif i==83:
+        return python_list_arr_index_83_suffix
+    elif i==84:
+        return python_list_arr_index_84_suffix
+    elif i==85:
+        return python_list_arr_index_85_suffix
+    elif i==86:
+        return python_list_arr_index_86_suffix
+    elif i==87:
+        return python_list_arr_index_87_suffix
+    elif i==88:
+        return python_list_arr_index_88_suffix
+    elif i==89:
+        return python_list_arr_index_89_suffix
+    elif i==90:
+        return python_list_arr_index_90_suffix
+    elif i==91:
+        return python_list_arr_index_91_suffix
+    elif i==92:
+        return python_list_arr_index_92_suffix
+    elif i==93:
+        return python_list_arr_index_93_suffix
+    elif i==94:
+        return python_list_arr_index_94_suffix
+    elif i==95:
+        return python_list_arr_index_95_suffix
+    elif i==96:
+        return python_list_arr_index_96_suffix
+    elif i==97:
+        return python_list_arr_index_97_suffix
+    elif i==98:
+        return python_list_arr_index_98_suffix
+    else:
+        print("arr: error: invalid index.")
+        return None

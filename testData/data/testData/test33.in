@@ -1,0 +1,20 @@
+# binary search
+def isBadVersion(i):
+    return i<=7
+
+def firstBadVersion(n):
+        low, mid, high = 1, n // 2, n
+        last_bad_version = -1
+        
+        while low <= high:
+            if isBadVersion(mid):
+                # bad version is in left half
+                high = mid - 1
+                last_bad_version = mid
+            else:
+                low = mid + 1
+            mid = low + (high - low) // 2
+        
+        return last_bad_version
+print(firstBadVersion(3))
+print(firstBadVersion(100))

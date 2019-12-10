@@ -1,0 +1,9 @@
+a = 1
+def f():
+    return a
+def g(x = f()):
+    return x + 1
+
+print(g())
+a = "str"
+print(g())

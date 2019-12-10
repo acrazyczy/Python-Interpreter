@@ -1,0 +1,20 @@
+# scope combination
+def ok(x,y,size):
+    if x>=0 and x<size and y>=0 and y<size:
+        return True
+    return False
+
+def dfs(x,y,size):
+    print(x,y)
+    if ok(x+1,y,size):dfs(x+1,y,size)
+    if ok(x,y+1,size):dfs(x,y+1,size)
+
+def func(x,y):
+    i=5
+    while i>0:
+        dfs(x,y,i)
+        print()
+        i-=1
+    return 'OK'
+
+print(func(0,0))

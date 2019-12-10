@@ -1,0 +1,4 @@
+# for range loop
+p="str"
+for i in range(5):
+    print(i,p)

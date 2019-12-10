@@ -1,0 +1,39 @@
+# type convert2
+def call(a):
+    print(a)
+    print(type(a))
+a=114212
+b=17284871842628778
+c=9.9
+d=-3.9991
+e=-0
+f=True
+g=False
+h='hifsahfsa'
+j="isfi"
+k=None
+call(a+b)
+call(a+c)
+call(a+d)
+call(a+f)
+call(a*c)
+call(a*d)
+call(a/d)
+call(b//a)
+call(b%a)
+call(c+f)
+call(a==k)
+call(c==k)
+call(g==k)
+call(h==k)
+call(h and a)
+call(h*3)
+call(k==k)
+call(h+j)
+call(int(c))
+call(float(a))
+call(int(f))
+call(float(f))
+call(bool(a))
+call(bool(c))
+call(bool(j))

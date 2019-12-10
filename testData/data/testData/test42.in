@@ -1,0 +1,27 @@
+# escape ghost leetcode
+def min(a,b):
+    if a<b:
+        return a
+    else:
+        return b
+
+def abs(a):
+    if a<0:
+        return -a
+    else:
+        return a
+
+def escapeGhosts(ghosts, target):
+    ghosts_min = float("inf")
+    for ghost in ghosts:
+        ghosts_min = min(ghosts_min, abs(ghost[0]-target[0]) + abs(ghost[1]-target[1]))
+    if abs(target[0]) + abs(target[1]) < ghosts_min:
+        return True
+    else:
+        return False
+
+def f(x,y):
+    print(escapeGhosts(x,y))
+
+f([[1, 0], [0, 3]],[0, 1])
+f([[1, 0]],[2, 0])

@@ -1,0 +1,10 @@
+# ops
+# ==
+print(3=='3')
+print(1==1.0)
+print(0.0==0)
+print(-0.0==0)
+print('pkg'*3=='pkgpkgpkg')
+print('pkg'+'pkgpk'=='pkgpkgpk')
+print(9!=9)
+print('passwd'=='password' or 1==1)

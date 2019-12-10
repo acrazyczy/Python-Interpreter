@@ -1,0 +1,16 @@
+# testtest
+a = 123456789
+b = 98765.4321
+c = True
+d = False
+e = 0
+f = -False
+
+print(e == f)
+print(d < a)
+print(c < a)
+print(a * d == b * d)
+print(a * b)
+print(a / b)
+print(a // int(b))
+print(a % int(b))

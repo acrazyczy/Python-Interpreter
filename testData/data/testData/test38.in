@@ -1,0 +1,44 @@
+# more compatiable solution
+def max(a,b):
+    if a<b:
+        return b
+    else:
+        return a
+
+def connectedCells(grid, i, j):
+    count = 1
+    grid[i][j] = 0
+    if i+1 < len(grid) and grid[i+1][j] == 1:
+        count += connectedCells(grid, i+1, j)
+    if i-1 >= 0 and grid[i-1][j]== 1:
+        count += connectedCells(grid, i-1, j)
+    if j+1 < len(grid[0]) and grid[i][j+1] == 1:
+        count += connectedCells(grid, i, j+1)
+    if j-1 >= 0 and grid[i][j-1] == 1:
+        count += connectedCells(grid, i, j-1)
+    return count
+
+def maxAreaOfIsland(grid):
+    maximum_islands = 0
+    if not grid:
+        return 0
+    i=0
+    while i<len(grid):
+        j=0
+        while j<len(grid[0]):
+            if grid[i][j] == 1:
+                maximum_islands = max(maximum_islands, connectedCells(grid, i, j))
+            j+=1
+        i+=1
+    return maximum_islands
+
+
+print(maxAreaOfIsland([[0,0,1,0,0,0,0,1,0,0,0,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,1,1,0,1,0,0,0,0,0,0,0,0],
+ [0,1,0,0,1,1,0,0,1,0,1,0,0],
+ [0,1,0,0,1,1,0,0,1,1,1,0,0],
+ [0,0,0,0,0,0,0,0,0,0,1,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,0,0,0,0,0,0,1,1,0,0,0,0]]))
+print(maxAreaOfIsland([[0,0,0,0,0,0,0,0]]))

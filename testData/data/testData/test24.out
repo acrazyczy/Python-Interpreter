@@ -1,0 +1,11 @@
+ok
+call true
+ok
+ok
+local fatal
+call true
+ok
+flag change
+ok
+ok
+Global fatal

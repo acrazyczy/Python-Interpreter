@@ -1,0 +1,32 @@
+# reach number - leetcode 
+def abs(i):
+    if i>=0:
+        return i
+    else:
+        return -i
+
+def reachNumber(target):
+        target=abs(target)
+        i=0
+        count=0
+        while(i<target):
+            count+=1
+            i=i+count
+            
+        if(target==i):
+            return count
+        else:
+            delta=abs(i-target)
+            while(delta%2!=0):
+                count+=1
+                i=i+count
+                delta=abs(i-target)
+            return count
+
+def sim(q):
+    print(reachNumber(q))
+
+ooo=0
+while ooo<50:
+    sim(q=ooo)
+    ooo+=1

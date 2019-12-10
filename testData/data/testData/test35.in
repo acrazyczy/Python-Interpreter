@@ -1,0 +1,15 @@
+# list test
+a=['strs',12345]
+print(a[0])
+print(a[1])
+a[0]=333
+print(a[0])
+a[0]+=a[1]
+print(a[0],a[1])
+print(len(a))
+b=['zero','first','second','third']
+t=0
+while t<20:
+    print(b[t%4])
+    t+=1
+

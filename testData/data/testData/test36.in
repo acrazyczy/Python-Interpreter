@@ -1,0 +1,28 @@
+# Battleships in a Board - leetcode
+def countBattleships(board):
+        ans = 0
+        i=0
+        while i<len(board):
+            j=0
+            while j <len(board[0]):
+                if board[i][j] == 'X':
+                    if i == 0 and j == 0:
+                        ans += 1
+                    if i == 0 and j != 0:
+                        if board[i][j-1] == '.':
+                            ans += 1
+                    if i != 0 and j == 0:
+                        if board[i-1][j] == '.':
+                            ans += 1
+                    if i != 0 and j != 0:
+                        if board[i-1][j] == '.' and board[i][j-1] == '.':
+                            ans += 1
+                j+=1
+            i+=1
+        return ans
+
+
+print(countBattleships([['X','.','.','X'],['.','.','.','X'],['.','.','.','X']]))
+print(countBattleships([['X','.','X','.'],['X','.','.','X'],['X','.','.','X']]))
+print(countBattleships([['X','.','X','X'],['.','X','.','X'],['X','.','X','.']]))
+

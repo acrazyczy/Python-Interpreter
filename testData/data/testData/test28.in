@@ -1,0 +1,11 @@
+# equals
+a=b=c=d=e=3
+print(a,b,c,d,e)
+c=9
+print(a,b,c,d,e)
+m,n=200,300
+print(m,n)
+o,p,q=r,s,t=u,v,w=8,9,float(9)
+print(o,p,q)
+print(r,s,t)
+print(u,v,w)

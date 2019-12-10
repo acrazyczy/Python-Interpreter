@@ -280,7 +280,7 @@ antlrcpp::Any EvalVisitor::visitMuldivmod_op(Python3Parser::Muldivmod_opContext 
 antlrcpp::Any EvalVisitor::visitFactor(Python3Parser::FactorContext *ctx)
 {
 	if (ctx -> atom_expr() == nullptr)
-		return std::vector<dtype>(1 , ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0] : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0]);
+		return std::vector<dtype>(1 , ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0].to_int() : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0].to_int());
 	return visitAtom_expr(ctx -> atom_expr());
 }
 

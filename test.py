@@ -3,7 +3,7 @@ import os
 if os.path.exists("temp"):
     os.system("rm -rf ./temp")
 os.makedirs("temp")
-for i in range(13):
+for i in range(22):
     inst ="./python_interpreter "+str(i)+" > temp/test"+str(i)+".out"
     print(inst)
     os.system(inst)

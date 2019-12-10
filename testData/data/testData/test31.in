@@ -1,0 +1,41 @@
+# generate template
+
+prefix='python_list_'
+middle='_index_'
+suffix='_suffix'
+def get_ith_name(i,name):
+    return prefix+name+middle+str(i)+suffix
+
+def spacetimes(i):
+    return ' '*i
+    
+def templateGenerate(name='myList',size=10):
+    if size<1:return 
+    print(prefix+name+suffix+'=0')
+    variable_g=0
+    while variable_g<size:
+        print(get_ith_name(variable_g,name)+'=None')
+        variable_g+=1
+    print('def '+'set_'+name+'(i,value):')
+    print(spacetimes(4)+'if i==0:')
+    print(spacetimes(8)+get_ith_name(0,name)+'=value')
+    set_g=1
+    while set_g<size:
+        print(spacetimes(4)+'elif i=='+str(set_g)+':')
+        print(spacetimes(8)+get_ith_name(set_g,name)+'=value')
+        set_g+=1
+    print(spacetimes(4)+'else:print("'+name+': error: invalid index.")')
+    print('def '+'get_'+name+'(i):')
+    print(spacetimes(4)+'if i==0:')
+    print(spacetimes(8)+'return '+get_ith_name(0,name))
+    set_g=1
+    while set_g<size:
+        print(spacetimes(4)+'elif i=='+str(set_g)+':')
+        print(spacetimes(8)+'return '+get_ith_name(set_g,name))
+        set_g+=1
+    print(spacetimes(4)+'else:')
+    print(spacetimes(8)+'print("'+name+': error: invalid index.")')
+    print(spacetimes(8)+'return None')
+    
+templateGenerate()
+templateGenerate('arr',99)

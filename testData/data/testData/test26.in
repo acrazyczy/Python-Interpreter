@@ -1,0 +1,30 @@
+# flow control
+def func(ctl):
+    if ctl=='return':
+        print(ctl)
+        print()
+        return
+    i=0
+    while i<10:
+        if ctl=='break' and i==7:
+            print(ctl)
+            break
+        i+=1
+    print(i)
+    j=0
+    while j<20:
+        if ctl=='continue' and j%3==0:
+            j+=1
+            print(ctl)
+            continue
+        print(j)
+        j+=1
+    print()
+
+func('hi')
+func('return')
+func('continue')
+func('break')
+func(200)
+func(1.1)
+func(True)

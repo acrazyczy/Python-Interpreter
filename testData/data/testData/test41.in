@@ -1,0 +1,22 @@
+# score of parenthess leetcode
+def scoreOfParentheses(S):
+    S=list(S)
+    layer=0
+    res=0
+    for i in range(len(S)):
+        c=S[i]
+        if c=='(':
+            layer+=1
+        else:
+            layer-=1
+            if S[i-1]=='(':
+                z=1
+                for p in range(layer):
+                    z*=2
+                res+=z
+    return res
+
+print(scoreOfParentheses("()"))
+print(scoreOfParentheses("(())"))
+print(scoreOfParentheses("()()"))
+print(scoreOfParentheses("(()(()))"))
