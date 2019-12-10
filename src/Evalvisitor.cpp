@@ -1,5 +1,5 @@
-#include <cassert>
 #include "Evalvisitor.h"
+#include <cassert>
 
 antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx)
 {
@@ -12,7 +12,6 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
-	assert(0);
 	name_space &nsp = stack_workspace.top();
 	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , crt.top().push_back(ctx -> NAME() -> getText());
 	std::vector<std::pair<std::string , dtype> > &func_arglist = nsp.getarglist(ctx);
@@ -138,6 +137,7 @@ antlrcpp::Any EvalVisitor::visitCompound_stmt(Python3Parser::Compound_stmtContex
 
 antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 {
+	assert(0);
 	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i)
 		if ((bool)visitTest(ctx -> test()[i]).as<std::vector<dtype> >()[0])
 		{
@@ -150,6 +150,7 @@ antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx)
 {
+	assert(0);
 	antlrcpp::Any ret;
 	++ loop_cnt;
 	while ((bool)visitTest(ctx -> test()).as<std::vector<dtype> >()[0])

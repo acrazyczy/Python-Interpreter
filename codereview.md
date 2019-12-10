@@ -6,7 +6,7 @@
 #### `static std::map<> static_func_sys`, `static std::map<> static_var_sys`
 `name_space` 的静态成员，表示全局名称空间的函数和变量声明。
 #### `std::map<> func_table`
-'name_space' 的静态成员，用来存储函数参数表。
+`name_space` 的静态成员，用来存储函数参数表。
 #### `static bool is_global_block`
 `name_space` 的静态成员，表示当前是否为全局语句块。
 #### `func_sys`, `var_sys`
