@@ -2,9 +2,11 @@
 # 变量和函数名管理
 ## 用到的类和对象
 ### `class name_space`
-用于储存变量名与变量值的映射关系，以及函数名与funcdef节点的映射关系。
+用于储存变量名与变量值的映射关系，以及函数名与 funcdef 节点的映射关系。
 #### `static std::map<> static_func_sys`, `static std::map<> static_var_sys`
 `name_space` 的静态成员，表示全局名称空间的函数和变量声明。
+#### `std::map<> func_table`
+'name_space' 的静态成员，用来存储函数参数表。
 #### `static bool is_global_block`
 `name_space` 的静态成员，表示当前是否为全局语句块。
 #### `func_sys`, `var_sys`
@@ -53,6 +55,4 @@
 ## `visitReturn_stmt` 的返回值
 如果返回是空，则返回 `nullptr`；
 
-如果返回是单值，则返回单值；
-
-否则返回 `std::vector<dtype>`。
+否则一律返回 `std::vector<dtype>`。
