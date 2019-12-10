@@ -338,18 +338,18 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 				if (ctx -> trailer() -> arglist() -> argument()[i] -> ASSIGN() == nullptr)
 				{
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<std::vector<dtype> >()[0];
-					new_name_space[func_arglist[i].first] = tmp , ext[func_arglist[i].first] = 1;
+					name_space::is_global_block = 0 , new_name_space[func_arglist[i].first] = tmp , name_space::is_global_block = was_global_block , ext[func_arglist[i].first] = 1;
 				}
 				else
 				{
 					std::string var_name = ctx -> trailer() -> arglist() -> argument()[i] -> test()[0] -> or_test() -> and_test()[0] -> not_test()[0] -> comparison() -> arith_expr()[0] -> term()[0] -> factor()[0] -> atom_expr() -> atom() -> NAME() -> getText();
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<std::vector<dtype> >()[0];
-					new_name_space[var_name] = tmp , name_space::is_global_block = was_global_block , ext[var_name] = 1;
+					name_space::is_global_block = 0 , new_name_space[var_name] = tmp , name_space::is_global_block = was_global_block , ext[var_name] = 1;
 				}
 		for (int i = 0 , tot = (int)func_arglist.size();i < tot;++ i)
 		{
 			std::string var_name = func_arglist[i].first;
-			if (!ext[var_name]) new_name_space[var_name] = func_arglist[i].second;
+			if (!ext[var_name]) name_space::is_global_block = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::is_global_block = was_global_block;
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
