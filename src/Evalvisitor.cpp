@@ -337,13 +337,11 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 			for (int i = 0 , tot = (int)ctx -> trailer() -> arglist() -> argument().size();i < tot;++ i)
 				if (ctx -> trailer() -> arglist() -> argument()[i] -> ASSIGN() == nullptr)
 				{
-					name_space::is_global_block = 0;
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[0]).as<std::vector<dtype> >()[0];
-					new_name_space[func_arglist[i].first] = tmp , name_space::is_global_block = was_global_block , ext[func_arglist[i].first] = 1;
+					new_name_space[func_arglist[i].first] = tmp , ext[func_arglist[i].first] = 1;
 				}
 				else
 				{
-					name_space::is_global_block = 0;
 					std::string var_name = ctx -> trailer() -> arglist() -> argument()[i] -> test()[0] -> or_test() -> and_test()[0] -> not_test()[0] -> comparison() -> arith_expr()[0] -> term()[0] -> factor()[0] -> atom_expr() -> atom() -> NAME() -> getText();
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<std::vector<dtype> >()[0];
 					new_name_space[var_name] = tmp , name_space::is_global_block = was_global_block , ext[var_name] = 1;
