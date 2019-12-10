@@ -40,7 +40,7 @@ def gcd(x , y) :
 
 def F(n , p , c) : return (n * n + c) % p
 
-seed = 0x125E591
+seed = 19260817
 
 def rand() :
 	seed += seed * 131072
@@ -72,9 +72,8 @@ def pollard_rho(n) :
 				return
 			p , q = F(p , n , c) , F(F(q , n , c) , n , c)
 
-pollard_rho(30)
-print()
 pollard_rho(998244352)
 print()
 pollard_rho(809172)
 print()
+pollard_rho(151299083768042202434037960)

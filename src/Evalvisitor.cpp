@@ -189,7 +189,7 @@ antlrcpp::Any EvalVisitor::visitOr_test(Python3Parser::Or_testContext *ctx)
 {
 	if ((int)ctx -> and_test().size() == 1) return visitAnd_test(ctx -> and_test()[0]);
 	dtype ret = visitAnd_test(ctx -> and_test()[0]).as<std::vector<dtype> >()[0];
-	for (int i = 1 , tot = (int)ctx -> and_test().size();i < tot;++ i) ret |= visitAnd_test(ctx -> and_test()[i]).as<std::vector<dtype> >()[0];
+	for (int i = 1 , tot = (int)ctx -> and_test().size();i < tot && !(bool)ret;++ i) ret |= visitAnd_test(ctx -> and_test()[i]).as<std::vector<dtype> >()[0];
 	return std::vector<dtype>(1 , ret);
 }
 
@@ -197,7 +197,7 @@ antlrcpp::Any EvalVisitor::visitAnd_test(Python3Parser::And_testContext *ctx)
 {
 	if ((int)ctx -> not_test().size() == 1) return visitNot_test(ctx -> not_test()[0]);
 	dtype ret = visitNot_test(ctx -> not_test()[0]).as<std::vector<dtype> >()[0];
-	for (int i = 1 , tot = (int)ctx -> not_test().size();i < tot;++ i) ret &= visitNot_test(ctx -> not_test()[i]).as<std::vector<dtype> >()[0];
+	for (int i = 1 , tot = (int)ctx -> not_test().size();i < tot && (bool)ret;++ i) ret &= visitNot_test(ctx -> not_test()[i]).as<std::vector<dtype> >()[0];
 	return std::vector<dtype>(1 , ret);
 }
 
@@ -211,7 +211,7 @@ antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx
 {
 	if ((int)ctx -> comp_op().empty()) return visitArith_expr(ctx -> arith_expr()[0]);
 	dtype ret(true) , lst = visitArith_expr(ctx -> arith_expr()[0]).as<std::vector<dtype> >()[0];
-	for (int i = 0 , tot = (int)ctx -> comp_op().size();i < tot;++ i)
+	for (int i = 0 , tot = (int)ctx -> comp_op().size();i < tot && (bool)ret;++ i)
 	{
 		dtype x = lst , y = visitArith_expr(ctx -> arith_expr()[i + 1]).as<std::vector<dtype> >()[0];
 		switch (ctx -> comp_op()[i] -> getText()[0])
