@@ -10,8 +10,6 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 	return ret;
 }
 
-bool is_cmp = 0;
-
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
 	name_space &nsp = stack_workspace.top();
@@ -214,11 +212,10 @@ antlrcpp::Any EvalVisitor::visitNot_test(Python3Parser::Not_testContext *ctx)
 antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx)
 {
 	if ((int)ctx -> comp_op().empty()) return visitArith_expr(ctx -> arith_expr()[0]);
-	is_cmp = 1;
 	dtype ret(true) , lst = visitArith_expr(ctx -> arith_expr()[0]).as<std::vector<dtype> >()[0];
 	for (int i = 0 , tot = (int)ctx -> comp_op().size();i < tot && (bool)ret;++ i)
 	{
-		dtype x = lst , y = visitArith_expr(ctx -> arith_expr()[i + 1]).as<std::vector<dtype> >()[0];
+		dtype x = lst, y = visitArith_expr(ctx -> arith_expr()[i + 1]).as<std::vector<dtype> >()[0];
 		switch (ctx -> comp_op()[i] -> getText()[0])
 		{
 			case '<':
@@ -236,7 +233,7 @@ antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx
 		}
 		lst = y;
 	}
-	is_cmp = 0;
+	assert((int)ctx -> comp_op().size() == 1);
  	return std::vector<dtype>(1 , ret);
 }
 
@@ -334,7 +331,6 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	}
 	else
 	{
-		assert(!is_cmp);
 		Python3Parser::FuncdefContext *func_node = visitAtom(ctx -> atom()).as<Python3Parser::FuncdefContext*>();
 		name_space new_name_space;
 		bool was_global_block = name_space::is_global_block;
