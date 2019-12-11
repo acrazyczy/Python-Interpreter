@@ -1,7 +1,6 @@
 #ifndef PYTHON_INTERPRETER_EVALVISITOR_H
 #define PYTHON_INTERPRETER_EVALVISITOR_H
 
-
 #include "Python3BaseVisitor.h"
 #include <algorithm>
 #include <stack>
