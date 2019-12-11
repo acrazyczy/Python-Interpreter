@@ -10,9 +10,11 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 	return ret;
 }
 
+bool is_funcdef = 0;
+
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
-	name_space &nsp = stack_workspace.top();
+	name_space &nsp = stack_workspace.top();is_funcdef = 1;
 	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , name_space::crt.top().push_back(ctx -> NAME() -> getText());
 	std::vector<std::pair<std::string , dtype> > &func_arglist = nsp.getarglist(ctx);
 	if (ctx -> parameters() -> typedargslist() != nullptr)
@@ -29,6 +31,7 @@ antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 			func_arglist.push_back(std::make_pair(var_name , visitTest(tdl_node -> test()[j]).as<std::vector<dtype> >()[0]));
 		}
 	}
+	is_funcdef = 0;
 	return nullptr;
 }
 
@@ -330,6 +333,7 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	}
 	else
 	{
+		assert(!is_funcdef);
 		Python3Parser::FuncdefContext *func_node = visitAtom(ctx -> atom()).as<Python3Parser::FuncdefContext*>();
 		name_space new_name_space;
 		bool was_global_block = name_space::is_global_block;
@@ -344,7 +348,6 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 				}
 				else
 				{
-					assert(0);
 					std::string var_name = ctx -> trailer() -> arglist() -> argument()[i] -> test()[0] -> or_test() -> and_test()[0] -> not_test()[0] -> comparison() -> arith_expr()[0] -> term()[0] -> factor()[0] -> atom_expr() -> atom() -> NAME() -> getText();
 					dtype tmp = visitTest(ctx -> trailer() -> arglist() -> argument()[i] -> test()[1]).as<std::vector<dtype> >()[0];
 					name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = tmp , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block , ext[var_name] = 1;
@@ -352,7 +355,7 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 		for (int i = 0 , tot = (int)func_arglist.size();i < tot;++ i)
 		{
 			std::string var_name = func_arglist[i].first;
-			if (!ext[var_name]) name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block , assert(0);
+			if (!ext[var_name]) name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block;
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
