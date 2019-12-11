@@ -1,7 +1,4 @@
 #include "Evalvisitor.h"
-#include <cassert>
-
-int func_get;
 
 antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx)
 {
@@ -356,10 +353,7 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 			if (!ext[var_name]) name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block;
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
-		++ func_get;
-		assert(func_get == 1);
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
-		-- func_get;
 		if (!ret.is<RETURN_SIGN>()) ret = std::vector<dtype>(1 , dtype());
 		else
 		{
