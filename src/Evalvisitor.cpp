@@ -10,7 +10,7 @@ antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx
 	return ret;
 }
 
-bool is_print = 0;
+bool is_cmp = 0;
 
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
@@ -214,6 +214,7 @@ antlrcpp::Any EvalVisitor::visitNot_test(Python3Parser::Not_testContext *ctx)
 antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx)
 {
 	if ((int)ctx -> comp_op().empty()) return visitArith_expr(ctx -> arith_expr()[0]);
+	is_cmp = 1;
 	dtype ret(true) , lst = visitArith_expr(ctx -> arith_expr()[0]).as<std::vector<dtype> >()[0];
 	for (int i = 0 , tot = (int)ctx -> comp_op().size();i < tot && (bool)ret;++ i)
 	{
@@ -235,6 +236,7 @@ antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx
 		}
 		lst = y;
 	}
+	is_cmp = 0;
  	return std::vector<dtype>(1 , ret);
 }
 
@@ -293,7 +295,6 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	if (ctx -> trailer() == nullptr) return visitAtom(ctx -> atom());
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("print"))
 	{
-		is_print = 1;
 		std::vector<dtype> ret;
 		if (ctx -> trailer() -> arglist() != nullptr)
 			for (int i = 0 , tot = (int)ctx -> trailer() -> arglist() -> argument().size();i < tot;++ i)
@@ -309,7 +310,6 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 			std::cout << ret[i];
 		}
 		std::cout << std::endl;
-		is_print = 0;
 		return nullptr;
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("int"))
@@ -334,7 +334,7 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	}
 	else
 	{
-		assert(!is_print);
+		assert(!is_cmp);
 		Python3Parser::FuncdefContext *func_node = visitAtom(ctx -> atom()).as<Python3Parser::FuncdefContext*>();
 		name_space new_name_space;
 		bool was_global_block = name_space::is_global_block;
