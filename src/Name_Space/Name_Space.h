@@ -21,6 +21,7 @@ private:
 	std::map<std::string , dtype> var_sys;
 	std::map<std::string , Python3Parser::FuncdefContext*> func_sys;
 public:
+	static std::stack<std::vector<std::string> > crt;
 	static bool is_global_block;
 
 	name_space(){}

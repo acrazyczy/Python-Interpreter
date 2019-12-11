@@ -1,19 +1,18 @@
 #include "Evalvisitor.h"
-#include <cassert>
 
 antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx)
 {
-	crt.push(std::vector<std::string>());
+	name_space::crt.push(std::vector<std::string>());
 	antlrcpp::Any ret = visitChildren(ctx);
-	for (std::string x: crt.top()) name_space().remove(x);
-	crt.pop();
+	for (std::string x: name_space::crt.top()) name_space().remove(x);
+	name_space::crt.pop();
 	return ret;
 }
 
 antlrcpp::Any EvalVisitor::visitFuncdef(Python3Parser::FuncdefContext *ctx)
 {
 	name_space &nsp = stack_workspace.top();
-	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , crt.top().push_back(ctx -> NAME() -> getText());
+	nsp.create(std::make_pair(ctx -> NAME() -> getText() , ctx)) , name_space::crt.top().push_back(ctx -> NAME() -> getText());
 	std::vector<std::pair<std::string , dtype> > &func_arglist = nsp.getarglist(ctx);
 	if (ctx -> parameters() -> typedargslist() != nullptr)
 	{
@@ -137,7 +136,6 @@ antlrcpp::Any EvalVisitor::visitCompound_stmt(Python3Parser::Compound_stmtContex
 
 antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 {
-	assert(0);
 	for (int i = 0 , tot = (int)ctx -> test().size();i < tot;++ i)
 		if ((bool)visitTest(ctx -> test()[i]).as<std::vector<dtype> >()[0])
 		{
@@ -150,7 +148,6 @@ antlrcpp::Any EvalVisitor::visitIf_stmt(Python3Parser::If_stmtContext *ctx)
 
 antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx)
 {
-	assert(0);
 	antlrcpp::Any ret;
 	++ loop_cnt;
 	while ((bool)visitTest(ctx -> test()).as<std::vector<dtype> >()[0])
@@ -169,7 +166,7 @@ antlrcpp::Any EvalVisitor::visitWhile_stmt(Python3Parser::While_stmtContext *ctx
 
 antlrcpp::Any EvalVisitor::visitSuite(Python3Parser::SuiteContext *ctx)
 {
-	crt.push(std::vector<std::string>());
+	name_space::crt.push(std::vector<std::string>());
 	antlrcpp::Any ret;
 	if (ctx -> simple_stmt() != nullptr) ret = visitSimple_stmt(ctx -> simple_stmt());
 	else for (int i = 0 , tot = (int)ctx -> stmt().size();i < tot;++ i)
@@ -178,8 +175,8 @@ antlrcpp::Any EvalVisitor::visitSuite(Python3Parser::SuiteContext *ctx)
 		if (ret.is<BREAK_SIGN>() || ret.is<CONTINUE_SIGN>() || ret.is<RETURN_SIGN>()) break;
 	}
 	name_space &nsp = stack_workspace.top();
-	for (std::string x: crt.top()) nsp.remove(x);
-	crt.pop();
+	for (std::string x: name_space::crt.top()) nsp.remove(x);
+	name_space::crt.pop();
 	return ret;
 }
 

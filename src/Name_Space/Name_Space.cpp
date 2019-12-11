@@ -9,6 +9,7 @@ bool name_space::is_global_block = 1;
 std::map<std::string , dtype> name_space::static_var_sys;
 std::map<std::string , Python3Parser::FuncdefContext*> name_space::static_func_sys;
 std::map<Python3Parser::FuncdefContext* , std::vector<std::pair<std::string , dtype> > > name_space::func_table;
+std::stack<std::vector<std::string> > name_space::crt;
 
 dtype &name_space::operator[](const std::string &var_name)
 {
@@ -20,6 +21,7 @@ dtype &name_space::operator[](const std::string &var_name)
 			it = var_sys.find(var_name);
 			if (it == var_sys.end()) it = var_sys.insert(std::make_pair(var_name , dtype())).first;
 		}
+	crt.top().push_back(var_name);
 	return it -> second;
 }
 

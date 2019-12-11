@@ -23,7 +23,6 @@ private:
 		RETURN_SIGN(const antlrcpp::Any ret_val_){ret_val = ret_val_;}
 	};
 
-	std::stack<std::vector<std::string> > crt;
 	std::stack<name_space> stack_workspace;
 
 	int loop_cnt = 0;
