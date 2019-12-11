@@ -351,9 +351,8 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 				}
 		for (int i = 0 , tot = (int)func_arglist.size();i < tot;++ i)
 		{
-			assert(0);
 			std::string var_name = func_arglist[i].first;
-			if (!ext[var_name]) name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block;
+			if (!ext[var_name]) name_space::is_global_block = 0 , name_space::crt_flag = 0 , new_name_space[var_name] = func_arglist[i].second , name_space::crt_flag = 1 , name_space::is_global_block = was_global_block , assert(0);
 		}
 		stack_workspace.push(new_name_space) , name_space::is_global_block = 0;
 		antlrcpp::Any ret = visitSuite(func_node -> suite());
