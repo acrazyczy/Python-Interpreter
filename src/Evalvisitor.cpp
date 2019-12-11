@@ -233,7 +233,6 @@ antlrcpp::Any EvalVisitor::visitComparison(Python3Parser::ComparisonContext *ctx
 		}
 		lst = y;
 	}
-	assert((int)ctx -> comp_op().size() == 1);
  	return std::vector<dtype>(1 , ret);
 }
 
@@ -321,6 +320,7 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("str"))
 	{
+		assert(0);
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype(std::string("0")));
 		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_str());
 	}
@@ -394,6 +394,7 @@ antlrcpp::Any EvalVisitor::visitAtom(Python3Parser::AtomContext *ctx)
 	}
 	else if (!ctx -> STRING().empty())
 	{
+		assert(0);
 		dtype ret(std::string(""));
 		for (int i = 0 , tot = (int)ctx -> STRING().size();i < tot;++ i)
 		{
