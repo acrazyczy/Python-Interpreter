@@ -5,6 +5,7 @@
 #include "Name_Space.h"
 
 bool name_space::is_global_block = 1;
+bool name_space::crt_flag = 1;
 
 std::map<std::string , dtype> name_space::static_var_sys;
 std::map<std::string , Python3Parser::FuncdefContext*> name_space::static_func_sys;
@@ -15,11 +16,19 @@ dtype &name_space::operator[](const std::string &var_name)
 {
 	std::map<std::string , dtype>::iterator it = static_var_sys.find(var_name);
 	if (it == static_var_sys.end())
-		if (is_global_block) it = static_var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);
+		if (is_global_block)
+		{
+			it = static_var_sys.insert(std::make_pair(var_name , dtype())).first;
+			if (crt_flag) crt.top().push_back(var_name);
+		}
 		else
 		{
 			it = var_sys.find(var_name);
-			if (it == var_sys.end()) it = var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);
+			if (it == var_sys.end())
+			{
+				it = var_sys.insert(std::make_pair(var_name , dtype())).first;
+				if (crt_flag) crt.top().push_back(var_name);
+			}
 		}
 	return it -> second;
 }

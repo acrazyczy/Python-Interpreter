@@ -23,6 +23,7 @@ private:
 public:
 	static std::stack<std::vector<std::string> > crt;
 	static bool is_global_block;
+	static bool crt_flag;
 
 	name_space(){}
 
