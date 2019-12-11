@@ -15,11 +15,11 @@ dtype &name_space::operator[](const std::string &var_name)
 {
 	std::map<std::string , dtype>::iterator it = static_var_sys.find(var_name);
 	if (it == static_var_sys.end())
-		if (is_global_block) it = static_var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);;
+		if (is_global_block) it = static_var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);
 		else
 		{
 			it = var_sys.find(var_name);
-			if (it == var_sys.end()) it = var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);;
+			if (it == var_sys.end()) it = var_sys.insert(std::make_pair(var_name , dtype())).first , crt.top().push_back(var_name);
 		}
 	return it -> second;
 }
