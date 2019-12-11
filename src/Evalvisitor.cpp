@@ -1,5 +1,4 @@
 #include "Evalvisitor.h"
-#include <cassert>
 
 antlrcpp::Any EvalVisitor::visitFile_input(Python3Parser::File_inputContext *ctx)
 {
@@ -282,7 +281,7 @@ antlrcpp::Any EvalVisitor::visitMuldivmod_op(Python3Parser::Muldivmod_opContext 
 antlrcpp::Any EvalVisitor::visitFactor(Python3Parser::FactorContext *ctx)
 {
 	if (ctx -> atom_expr() == nullptr)
-		return std::vector<dtype>(1 , ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0].to_int() : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0].to_int());
+		return std::vector<dtype>(1 , ctx -> MINUS() == nullptr ? +visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0] : -visitFactor(ctx -> factor()).as<std::vector<dtype> >()[0]);
 	return visitAtom_expr(ctx -> atom_expr());
 }
 
@@ -320,7 +319,6 @@ antlrcpp::Any EvalVisitor::visitAtom_expr(Python3Parser::Atom_exprContext *ctx)
 	}
 	else if (ctx -> atom() -> NAME() -> getText() == std::string("str"))
 	{
-		assert(0);
 		if (ctx -> trailer() -> arglist() == nullptr) return std::vector<dtype>(1 , dtype(std::string("0")));
 		else return std::vector<dtype>(1 , visitTest(ctx -> trailer() -> arglist() -> argument()[0] -> test()[0]).as<std::vector<dtype> >()[0].to_str());
 	}
@@ -394,7 +392,6 @@ antlrcpp::Any EvalVisitor::visitAtom(Python3Parser::AtomContext *ctx)
 	}
 	else if (!ctx -> STRING().empty())
 	{
-		assert(0);
 		dtype ret(std::string(""));
 		for (int i = 0 , tot = (int)ctx -> STRING().size();i < tot;++ i)
 		{
