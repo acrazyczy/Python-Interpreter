@@ -1,2 +1,6 @@
-def F() :
-	return 1 , 2 , 3
+def foo(x) :
+	x += 1
+	return x
+x = 1
+print(foo(x))
+print(x)

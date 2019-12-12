@@ -14,22 +14,26 @@ std::stack<std::vector<std::string> > name_space::crt;
 
 dtype &name_space::operator[](const std::string &var_name)
 {
-	std::map<std::string , dtype>::iterator it = static_var_sys.find(var_name);
-	if (it == static_var_sys.end())
-		if (is_global_block)
+	std::map<std::string , dtype>::iterator it;
+	if (is_global_block)
+	{
+		it = static_var_sys.find(var_name);
+		if (it == static_var_sys.end()) it = static_var_sys.insert(std::make_pair(var_name , dtype())).first;
+	}
+	else
+	{
+		it = var_sys.find(var_name);
+		if (it == var_sys.end())
 		{
-			it = static_var_sys.insert(std::make_pair(var_name , dtype())).first;
+			if (crt_flag)
+			{
+				it = static_var_sys.find(var_name);
+				if (it != static_var_sys.end()) return it -> second;
+			}
+			it = var_sys.insert(std::make_pair(var_name , dtype())).first;
 			if (crt_flag) crt.top().push_back(var_name);
 		}
-		else
-		{
-			it = var_sys.find(var_name);
-			if (it == var_sys.end())
-			{
-				it = var_sys.insert(std::make_pair(var_name , dtype())).first;
-				if (crt_flag) crt.top().push_back(var_name);
-			}
-		}
+	}
 	return it -> second;
 }
 
