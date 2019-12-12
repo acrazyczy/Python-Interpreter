@@ -58,7 +58,7 @@ integer operator%(const integer &A , const integer &B){return integer().divide(A
 bool operator<(const integer &A , const integer &B)
 {
 	if (A.sig != B.sig) return A.sig < B.sig;
-	if (A.len != B.len) return A.len < B.len;
+	if (A.len != B.len) return (A.len < B.len) ^ A.sig ^ 1;
 	for (int i = A.len - 1;i >= 0;-- i)
 	{
 		if (A.num[i] < B.num[i]) return A.sig;
@@ -70,7 +70,7 @@ bool operator<(const integer &A , const integer &B)
 bool operator>(const integer &A , const integer &B)
 {
 	if (A.sig != B.sig) return A.sig > B.sig;
-	if (A.len != B.len) return A.len > B.len;
+	if (A.len != B.len) return (A.len > B.len) ^ A.sig ^ 1;
 	for (int i = A.len - 1;i >= 0;-- i)
 	{
 		if (A.num[i] > B.num[i]) return A.sig;
@@ -82,7 +82,7 @@ bool operator>(const integer &A , const integer &B)
 bool operator<=(const integer &A , const integer &B)
 {
 	if (A.sig != B.sig) return A.sig < B.sig;
-	if (A.len != B.len) return A.len < B.len;
+	if (A.len != B.len) return (A.len < B.len) ^ A.sig ^ 1;
 	for (int i = A.len - 1;i >= 0;-- i)
 	{
 		if (A.num[i] < B.num[i]) return A.sig;
@@ -94,7 +94,7 @@ bool operator<=(const integer &A , const integer &B)
 bool operator>=(const integer &A , const integer &B)
 {
 	if (A.sig != B.sig) return A.sig > B.sig;
-	if (A.len != B.len) return A.len > B.len;
+	if (A.len != B.len) return (A.len > B.len) ^ A.sig ^ 1;
 	for (int i = A.len - 1;i >= 0;-- i)
 	{
 		if (A.num[i] > B.num[i]) return A.sig;

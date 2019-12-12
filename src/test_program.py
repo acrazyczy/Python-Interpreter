@@ -1,6 +1,5 @@
-def foo(x) :
-	x += 1
-	return x
-x = 1
-print(foo(x))
-print(x)
+def foo(a):
+    print(a)
+    return a
+print(1<2>-4==-4<5!=9>7>=7<=7)
+print(foo(1)<foo(2)>foo(-124513921958723697000000000000000000000000000000000000000000000000000000000)<foo(-4)==foo(9)<foo(7)>=foo(7))
